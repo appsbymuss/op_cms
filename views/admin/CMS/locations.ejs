@@ -1,0 +1,163 @@
+<%- include('../../partials/admin/Header',{'username':locals.username,'activeDash':1}) %>
+
+<script>
+  function handleEdit(e){
+      const inputsList = document.querySelectorAll('.inputs');
+      const existingData = e.parentElement.parentElement.children[0].children
+
+      const actualData = [
+        existingData['id'].value,
+        existingData['nameLocation'].value,
+        existingData['titleComponent'].innerText,
+        existingData['imagePath'].value,
+        existingData['addressComponent'].innerText,
+        existingData['contentComponent'].innerText,
+        existingData['slug'].value,
+      ]
+
+      inputsList.forEach((e,index) => {
+        if(index == 3){
+          e.src = actualData[index];
+        }else{
+          e.value = actualData[index];
+        }
+      })
+      // Add a correct way to get text and then "hack it" into the modal. 
+      // Kinda Added [DONE]
+      
+  }
+</script>
+
+<div>
+    <h3 class="text-black-50 mb-5">Registered "Locations"</h3>
+</div>
+
+<div class="row">
+  <% locals.locationsData && locals.locationsData.map((e) => { %>
+    <div class="col-12 mb-4">
+      <div class="card shadow">
+        <h5 class="card-header"><%= e.location.nom %></h5>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-8">
+              <h3 class="card-title" id="titleComponent"><%= e.pagecomponent[0] && e.pagecomponent[0].title %></h3>
+              <p class="card-text" id="contentComponent"><%= e.pagecomponent[0] && e.pagecomponent[0].content %></p>
+              <p class="card-text text-danger" id="addressComponent"><%= e.location.address %></p>
+              <!-- Images of the component-->
+              <input hidden id="nameLocation" value="<%=e.location.nom%>">
+              <input hidden id="id" value="<%=e.location.id_location%>">
+              <input hidden id="slug" value="<%=e['slug']%>" type="text"/>
+              <input hidden id="imagePath" value="/assets_client/img/uploadedImages/locations/<%=e.pagecomponent[0] && e.pagecomponent[0].pageimage[0] && e.pagecomponent[0].pageimage[0].image_path%>" />
+            </div>
+            <div class="col-md-4 text-md-end">
+              <button class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#editModal" onclick="handleEdit(this)">Edit</button>
+              <a class="btn btn-sm btn-outline-danger" href="/admin/locations/remove?id=<%=e.location.id_location%>">Remove</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% }); %>
+  
+  <button type="submit" class="btn btn-outline-success col-6 mx-auto" data-bs-toggle="modal" data-bs-target="#ajouteModal">Add a Location</button>
+</div>
+
+<!-- Modal : Add -->
+<div class="modal fade" id="ajouteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form method="POST" action="/admin/locations/add" enctype="multipart/form-data">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalLabel">Add a Location</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+
+            <label for="title" class="form-label fw-bold">Name Of Location</label>
+            <input name="nameLocation" type="text" class="form-control" id="title" aria-describedby="titleHelp1">
+            <div id="titleHelp1" class="form-text">Name of the Location</div>
+
+            <label for="title" class="form-label fw-bold">Title</label>
+            <input name="title" type="text" class="form-control" id="title" aria-describedby="titleHelp2">
+            <div id="titleHelp2" class="form-text">Title Of the location.</div>
+
+            <label for="image" class="form-label fw-bold">Image</label>
+            <input name="image" class="form-control" type="file" id="image" />
+            <div id="titleHelp2" class="form-text">Image Associated with the location</div>
+  
+            <label for="address" class="form-label fw-bold">Address</label>
+            <input name="address" type="text" class="form-control" id="address" aria-describedby="titleHelp3">
+            <div id="titleHelp3" class="form-text">Address of where this "Location" is located at.</div>
+
+            <label for="textAreaInput" class="form-label fw-bold">Content</label>
+            <textarea name="content" id="textAreaInput" class="col-12 form-control" rows="3" aria-describedby="titleHelp4"></textarea>
+            <div id="titleHelp4" class="form-text">The Content, also known as the paragraph text that will be shown to the visitor of the page.</div>
+
+            <label for="slug" class="form-label fw-bold">Slug</label>
+            <input name="slug" type="text" class="form-control" id="slug" aria-describedby="titleHelp5">
+            <div id="titleHelp5" class="form-text">Slug of the page</div>
+          </div>
+          
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="reset" class="btn btn-white">Clear Inputs</button>
+            <button type="submit" class="btn btn-success">Submit</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  
+<!-- Modal : Edit -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+
+    <form method="POST" action="/admin/locations/update" enctype="multipart/form-data">
+      
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalLabel">Edit informations about a Location</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <input name="id" hidden type="text" class="inputs">
+
+            <label for="nameLocation" class="form-label fw-bold">Name Of Location</label>
+            <input name="nameLocation" type="text" class="form-control inputs" id="nameLocation" aria-describedby="titleHelp1">
+            <div id="titleHelp1" class="form-text">Name of the Location</div>
+
+            <label for="title" class="form-label fw-bold">Title</label>
+            <input name="title" type="text" class="form-control inputs" id="title" aria-describedby="titleHelp2">
+            <div id="titleHelp2" class="form-text">Title Of the Section.</div>
+
+            <img class="card inputs" src="" height="120px" width="120px"/>
+            
+            <label for="image" class="form-label fw-bold">Image</label>
+            <input name="image" class="form-control" type="file" id="image" />
+            <div id="titleHelp2" class="form-text">Images Associated with the Section</div>
+  
+            <label for="address" class="form-label fw-bold">Address</label>
+            <input name="address" type="text" class="form-control inputs" id="address" aria-describedby="titleHelp3">
+            <div id="titleHelp3" class="form-text">Address of where this "Location" is located at.</div>
+
+            <label for="textAreaInput" class="form-label fw-bold">Content</label>
+            <textarea name="content" id="textAreaInput" class="col-12 form-control inputs" rows="3" aria-describedby="titleHelp4" maxlength="500"></textarea>
+            <div id="titleHelp4" class="form-text">The Content, also known as the paragraph text that will be shown to the visitor of the page.</div>
+
+            <label for="slug" class="form-label fw-bold">Slug</label>
+            <input name="slug" type="text" class="form-control inputs" id="slug" aria-describedby="titleHelp5">
+            <div id="titleHelp5" class="form-text">Slug of the page</div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="reset" class="btn btn-white">Clear Inputs</button>
+            <button type="submit" class="btn btn-success">Submit Changes</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  
+<%- include('../../partials/admin/Footer') %>

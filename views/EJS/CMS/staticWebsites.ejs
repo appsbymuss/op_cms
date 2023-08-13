@@ -1,0 +1,47 @@
+<%- include('../../partials/admin/Header',{'username':locals.username,'activeDash':1}) %>
+<div>
+    <h3 class="text-black-50 mb-5">Page Web Statique</h3>
+</div>
+    <div class="row">
+      <div class="col-md-6 col-lg-4 mb-4">
+        <a href="/admin/landingPages/contact-us" class="text-decoration-none">
+          <div class="card shadow">
+            <div class="card-body">
+              <h3 class="card-title">Contacter Nous</h3>
+              <p class="card-text text-secondary">This page is responsible for providing a formulaire.</p>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6 col-lg-4 mb-4">
+        <a href="/admin/landingPages/zone-intervention" class="text-decoration-none">
+          <div class="card shadow">
+            <div class="card-body">
+              <h3 class="card-title">Zone D'Intervention</h3>
+              <p class="card-text text-secondary">Shows the available "Locations de benne" that can be headed to, for picking up the desired dumpster.</p>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6 col-lg-4 mb-4">
+        <a href="/admin/landingPages/page-service" class="text-decoration-none">
+          <div class="card shadow">
+            <div class="card-body">
+              <h3 class="card-title">Nos Services</h3>
+              <p class="card-text text-secondary">Highlights our usual services concerning the dumpster renting services we offer</p>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6 col-lg-4 mb-4">
+        <a href="/admin/landingPages/accueil" class="text-decoration-none">
+          <div class="card shadow">
+            <div class="card-body">
+              <h3 class="card-title">Accueil</h3>
+              <p class="card-text text-secondary">This is the actual landing page where we show multiple examples of how we work and operate.</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+<%- include('../../partials/admin/Footer') %>

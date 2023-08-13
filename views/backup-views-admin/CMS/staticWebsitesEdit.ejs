@@ -1,0 +1,201 @@
+<%- include('../../partials/admin/Header',{'username':locals.username,'activeDash':1}) %>
+
+<script>
+    function handleEdit(e){
+        const inputsList = document.querySelectorAll('.inputs');
+        const existingData = e.parentElement.parentElement.children[0].children
+        const actualData = [
+          existingData['id'].value,
+          existingData['classSelector'].value,
+          existingData['titleComponent'].innerText,
+          existingData['contentComponent'].innerText,
+        ]
+        console.log(actualData);
+        inputsList.forEach((e,index) => {
+          e.value = actualData[index];
+        })
+        // Add a correct way to get text and then "hack it" into the modal. 
+        // Kinda Added [DONE]
+
+    }
+</script>
+
+<div>
+    <h3 class="text-black-50 mb-5">Editing Page: <%= locals.slug %></h3>
+</div>
+
+<div class="row">
+  <% locals.components && locals.components.map((e) => { %>
+  <div class="col-12 mb-4">
+    <div class="card shadow">
+      <h5 class="card-header"><%= e.classSelector %></h5>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-8">
+            <h3 class="card-title" id="titleComponent"><%=e.title%></h3>
+            <p class="card-text" id="contentComponent"><%=e.content%></p>
+            <!-- Images of the component-->
+            <input hidden id="id" value="<%=e.id_component%>">
+            <input hidden id="imagesOfComponent" value="<%=e.pageimage.join(';')%>">
+            <input hidden id="classSelector" value="<%=e.classSelector%>">
+          </div>
+          <div class="col-md-4 text-md-end">
+            <button class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#editModal" onclick="handleEdit(this)">Edit</button>
+            <a class="btn btn-sm btn-outline-danger" href="/admin/landingPages/<%=locals.slug%>/remove/?id=<%=e.id_component%>">Remove</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% }); %>
+  <button type="submit" class="btn btn-outline-success col-6 mx-auto" data-bs-toggle="modal" data-bs-target="#ajouteModal">Add a Section</button>
+</div>
+
+<!-- Modal : Edit-->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form method="POST" enctype="multipart/form-data" action="/admin/landingPages/<%=locals.slug%>/update">
+      <div class="modal-dialog">
+        <input hidden name="id" type="text" class="inputs">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalLabel">Update Information</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <label for="classInput" class="form-label fw-bold">Class Selector:</label>
+            <input name="classSelector" type="text" class="form-control inputs" id="classInput" aria-describedby="titleHelp1">
+            <div id="titleHelp1" class="form-text">Example: type "main-content" for class = "main-content"</div>
+            
+            <label for="title" class="form-label fw-bold">Title</label>
+            <input name="title" type="text" class="form-control inputs" id="title" aria-describedby="titleHelp2">
+            <div id="titleHelp2" class="form-text">Title Of the Section.</div>
+
+            <label for="image" class="form-label fw-bold">Images</label>
+            <input name="image[]" class="form-control" type="file" id="imageEdit" multiple />
+            <div id="titleHelp2" class="form-text">Images Associated with the Section</div>
+            <div id="image-previewEdit" class="d-flex flex-row flex-wrap card shadow justify-content-evenly"></div>
+
+            <label for="textAreaInput" class="form-label fw-bold">Content</label>
+            <textarea name="content" id="textAreaInput" class="col-12 form-control inputs" rows="3" aria-describedby="titleHelp3"></textarea>
+            <div id="titleHelp3" class="form-text">The Content, also known as the paragraph text that will be shown to the visitor of the page.</div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="reset" id="resetEdit" class="btn btn-white">Clear Inputs</button>
+            <button type="submit" class="btn btn-success">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  
+<!-- Modal : Add -->
+<div class="modal fade" id="ajouteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+
+  <form method="POST" enctype="multipart/form-data" action="/admin/landingPages/<%=locals.slug%>/add">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalLabel">Add a Section</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <label for="classInput" class="form-label fw-bold">Class Selector:</label>
+          <input name="classSelector" type="text" class="form-control" id="classInput" aria-describedby="titleHelp1">
+          <div id="titleHelp1" class="form-text">Example: type "main-content" for class = "main-content"</div>
+          
+          <label for="title" class="form-label fw-bold">Title</label>
+          <input name="title" type="text" class="form-control" id="title" aria-describedby="titleHelp2">
+          <div id="titleHelp2" class="form-text">Title Of the Section.</div>
+
+
+          <label for="image" class="form-label fw-bold">Images</label>
+          <input name="image[]" class="form-control" type="file" id="imageAdd" multiple />
+          <div id="titleHelp2" class="form-text">Images Associated with the Section</div>
+          <div id="image-previewAdd" class="d-flex flex-row flex-wrap card shadow justify-content-evenly"></div>
+
+
+          <label for="textAreaInput" class="form-label fw-bold">Content</label>
+          <textarea name="content" id="textAreaInput" class="col-12 form-control" rows="3" aria-describedby="titleHelp3"></textarea>
+          <div id="titleHelp3" class="form-text">The Content, also known as the paragraph text that will be shown to the visitor of the page.</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="reset" id="resetAdd" class="btn btn-white">Clear Inputs</button>
+          <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script>
+  const inputAdd = document.querySelector("#imageAdd");
+  const inputEdit = document.querySelector("#imageEdit");
+
+  const resetBtnAdd = document.querySelector("#resetAdd");
+  const resetBtnEdit = document.querySelector("#resetEdit");
+
+  const previewAdd = document.querySelector("#image-previewAdd");
+  const previewEdit = document.querySelector("#image-previewEdit");
+
+  inputAdd.addEventListener("change", () => {
+    updatePreview("add");
+  });
+
+  inputEdit.addEventListener("change", () => {
+    updatePreview("edit");
+  });
+
+  resetBtnAdd.addEventListener("click", (e) => {
+    inputAdd.value = "";
+    updatePreview("add");
+  });
+
+  resetBtnEdit.addEventListener("click", () => {
+    inputEdit.value = "";
+    updatePreview("edit");
+  });
+
+
+  // Modal Type is "add" or "update".
+  function updatePreview(modal_type) {
+      let images;
+      let previewSection;
+      if(modal_type === "add"){
+        images = inputAdd;
+        previewSection = previewAdd;
+        console.log("yes firsta")
+      }else{
+        images = inputEdit;
+        previewSection = previewEdit;
+        console.log("yes firstb")
+      }
+      previewSection.innerHTML = "";
+
+      // If No Images.
+      console.log(images.files);
+      if(!images){
+        return;
+      }
+      const files = Array.from(images.files);
+
+      files.forEach(file => {
+          const reader = new FileReader();
+
+          reader.onload = function(event) {
+              const img = document.createElement("img");
+              img.src = event.target.result;
+              img.width = 120
+              img.height = 120
+              img.classList.add("img-thumbnail", "mr-2");
+              previewSection.appendChild(img);
+          }
+
+          reader.readAsDataURL(file);
+      });
+  }
+</script>
+<%- include('../../partials/admin/Footer') %>

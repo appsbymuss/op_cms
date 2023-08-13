@@ -1,0 +1,78 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model location {
+  id_location Int     @id @default(autoincrement())
+  nom         String? @db.VarChar(50)
+  address     String? @db.VarChar(120)
+  id_page     Int     @unique(map: "id_page")
+  page        page    @relation(fields: [id_page], references: [id_page], onDelete: Cascade, onUpdate: NoAction, map: "location_ibfk_1")
+}
+
+model page {
+  id_page       Int             @id @default(autoincrement())
+  slug          String          @unique(map: "slug") @db.VarChar(50)
+  createdAt     DateTime?       @default(dbgenerated("(curdate())")) @db.Date
+  template_file String          @db.VarChar(50)
+  location      location?
+  pagecomponent pagecomponent[]
+}
+
+model pagecomponent {
+  id_component  Int         @id @default(autoincrement())
+  id_page       Int
+  title         String?     @db.VarChar(50)
+  content       String?     @db.VarChar(500)
+  classSelector String      @db.VarChar(30)
+  page          page?       @relation(fields: [id_page], references: [id_page], onDelete: Cascade, onUpdate: NoAction, map: "pagecomponent_ibfk_1")
+  pageimage     pageimage[]
+
+  @@unique([id_page, classSelector])
+  @@index([id_page], map: "id_page")
+}
+
+model pageimage {
+  id_image      Int           @default(autoincrement())
+  id_component  Int
+  image_path    String?       @db.VarChar(120)
+  pagecomponent pagecomponent @relation(fields: [id_component], references: [id_component], onDelete: Cascade, onUpdate: NoAction, map: "pageimage_ibfk_1")
+
+  @@id([id_image, id_component])
+  @@index([id_component], map: "id_component")
+}
+
+model admin {
+  id_admin Int     @id @default(autoincrement())
+  username String? @unique(map: "username") @db.VarChar(20)
+  password String? @db.VarChar(30)
+}
+
+model websiteparams {
+  id              Int     @id @default(autoincrement())
+  logo_path       String  @db.VarChar(50)
+  website_title   String  @db.VarChar(50)
+  phone_number    String  @db.VarChar(20)
+  email           String? @db.VarChar(60)
+  primary_color   String? @db.VarChar(12)
+  secondary_color String? @db.VarChar(12)
+}
+
+
+model commandsarchive {
+  id_command   Int       @id @default(autoincrement())
+  first_name   String   @db.VarChar(60)
+  last_name    String   @db.VarChar(60)
+  sexe         String   @db.Char(1)
+  phone_number String    @db.VarChar(10)
+  specification String   @db.VarChar(500)
+  email        String?   @db.VarChar(70)
+  ville        String   @db.VarChar(40)
+  interventionDate DateTime? @db.Date
+  createdAt    DateTime? @default(dbgenerated("(curdate())")) @db.Date
+}

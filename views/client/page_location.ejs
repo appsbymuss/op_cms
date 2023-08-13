@@ -1,0 +1,24 @@
+<%- include('../partials/client/Header',{Header:locals.layoutData.Header}) %>
+
+<main class="page service-page bg-primary shadow-lg">
+    <section class="clean-block clean-services dark">
+        <div class="container mt-2">
+            <div class="block-heading">
+                <h2 class="text-dark">Location</h2>
+                <h3 class="text-primary"><%= locals.pageData['location-main'] && locals.pageData['location-main']['title'] %></h3>
+            </div>
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="card shadow ">
+                        <img src="/assets_client/img/uploadedImages/locations/<%= locals.pageData['location-main'] && locals.pageData['location-main']['pageimage'] && locals.pageData['location-main']['pageimage'][0]['image_path'] %>" height="450px" width="auto" alt="Image of the location" class="img-fluid rounded"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h3><%= locals.pageData['location-main'] && locals.pageData['location-main']['content'] %></h3>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<%- include('../partials/client/Footer',{Footer:locals.layoutData.Footer}) %>

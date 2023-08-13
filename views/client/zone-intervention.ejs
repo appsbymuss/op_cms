@@ -1,0 +1,29 @@
+<%- include('../partials/client/Header',{Header:locals.layoutData.Header}) %>
+
+    <main class="page service-page">
+        <section class="clean-block clean-services dark">
+            <div class="container">
+                <div class="block-heading">
+                    <h2 class="text-primary" id="zone-intervention"><%= locals.pageData['zone-intervention'] && locals.pageData['zone-intervention']['title'] %></h2>
+                    <p>
+                        <%= locals.pageData['zone-intervention'] && locals.pageData['zone-intervention']['content']%>
+                        nous pouvons vous fournir des bennes où que vous soyez à Nador, cliquez sur le bouton pour être redirigé vers nos Localisations</p>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row justify-content-end align-items-start">
+                    <div class="col text-center align-self-center"><div class="card shadow-lg"><img src="/assets_client/img/benne/benne3.jpg" width="auto" height="400"></div></div>
+                    <div class="col align-self-center">
+                        <h3 class="text-primary">Nos Lieux d'intervention</h3>
+                        <ul>
+                            <% locals.layoutData.Footer.locations.map((e) => { %>
+                                <li><a class="text-dark" href="<%=e.slug%>"><%=e.location['nom']%></a></li>
+                            <% }) %>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+<%- include('../partials/client/Footer',{Footer:locals.layoutData.Footer}) %>

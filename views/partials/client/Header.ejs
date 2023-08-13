@@ -1,0 +1,40 @@
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title> - <%= locals.Header.website_title %> - </title>
+    <link rel="stylesheet" href="/static/assets_client/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets_client/bootstrap/css/bootstrap.min1.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i&amp;display=swap">
+    <link rel="stylesheet" href="/static/assets_client/fonts/material-icons.min.css">
+    <link rel="stylesheet" href="/static/assets_client/fonts/simple-line-icons.min.css">
+    <link rel="stylesheet" href="/static/assets_client/css/Features-Small-Icons-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.11.1/baguetteBox.min.css">
+    <link rel="stylesheet" href="/static/assets_client/css/vanilla-zoom.min.css">
+    <style>
+        .icon{font-size:30px;width:30px;text-align:center;color:var(--bs-secondary);}.feature-box h4,.feature-box .h4{font-weight:600;font-size:1.2rem}
+        .bs-icon.bs-icon-primary-light {
+            background: rgba(rgb(var(--bs-primary)), .2);
+        }
+    </style>
+</head>
+<nav class="navbar navbar-light navbar-expand-lg fixed-top bg-primary clean-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="/accueil">
+            <img src="/assets_client/img/uploadedImages/websiteLogo/<%= locals.Header.logo_path %>" width="30" height="30" alt="Logo" class="logo rounded">
+            <span class="logo-text"><%= locals.Header.website_title %></span>
+        </a>
+        <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1">
+            <span class="visually-hidden">Toggle navigation</span>
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navcol-1">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link " href="/accueil">Accueil</a></li>
+                <li class="nav-item"><a class="nav-link" href="/zone-intervention">Zone D'INTERVENTION</a></li>
+                <li class="nav-item"><a class="nav-link" href="/page-service">Services</a></li>
+                <li class="nav-item"><a class="nav-link" href="/contact-us">Contactez-nous<br></a></li>
+                <li class="nav-item"><a class="nav-link link-success fw-bold" href="tel:<%=locals.Header.phone_number %>"><%= locals.Header.phone_number %></a></li>
+            </ul>
+        </div>
+    </div>
+</nav>

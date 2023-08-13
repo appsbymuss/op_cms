@@ -1,0 +1,98 @@
+<%- include('../partials/client/Header',{Header:locals.layoutData.Header}) %>
+
+    <main class="page contact-us-page shadow-lg">
+        <section class="clean-block clean-form dark">
+            <div class="container">
+                <% if(locals.sendingStatus){ %>
+                    <div class="position-fixed top-1 start-0 end-0 mt-4">
+                        <div class="toast <%= locals.isSent ? "bg-success" : "bg-danger" %> text-dark w-100" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="4000">
+                        <div class="toast-header">
+                            <strong class="me-auto <%= locals.isSent ? "text-white" : "text-dark" %> fw-bold">Mail Status</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                        <div class="toast-body <%= locals.isSent ? "text-white" : "text-dark" %> fw-bold">
+                            <%= locals.sendingStatus %>
+                        </div>
+                        </div>
+                    </div>
+                <% }; %>
+                <div class="block-heading">
+                    <h2 class="text-primary" id="contactez-nous"><%= locals.pageData['contactez-nous'] && locals.pageData['contactez-nous']['title'] %><br></h2>
+                    <p><%= locals.pageData['contactez-nous'] && locals.pageData['contactez-nous']['content'] %></p>
+                </div>
+                <form method="POST">
+                    <div class="mb-3"><label class="form-label" for="name">Civilité* :<br></label>
+                        <select class="form-select" name="sexe" required>
+                            <option value="M" selected>Monsieur</option>
+                            <option value="F">Madame</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="name">Nom*</label>
+                        <input name="nom" class="form-control" type="text" id="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="name">Prenom*</label>
+                        <input name="prenom" class="form-control" type="text" id="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="email">Email</label>
+                        <input name="email" class="form-control" type="email">
+                    </div>
+                    <h4>Vos coordonnées<br></h4>
+                    <div class="mb-3">
+                        <label class="form-label" for="text">Ville*</label>
+                        <input name="ville" class="form-control" type="text" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="tel">Telephone*</label>
+                        <input name="telephone" class="form-control" type="tel" pattern="^\d+$" required>
+                    </div>
+                    <div class="mb-3"><label class="form-label" for="date">Date D'intervention*</label>
+                        <select name="date_jour" class="form-select form-select-sm">
+                            <option value="" selected>Jour</option>
+                            <% for(let i = 1;i <= 31;i++){ %>
+                                <option value="<%= i %>"><%= i %></option>
+                            <% } %>
+                        </select>
+                        <select name="date_mois" class="form-select form-select-sm">
+                            <option value="" selected>Mois</option>
+                            <% for(let i = 1;i <= 12;i++){ %>
+                                <option value="<%= i %>"><%= i %></option>
+                            <% } %>
+                        </select>
+                        <select name="date_annee" class="form-select form-select-sm">
+                            <option value="" selected>Annee</option>
+                            <% const currentYear = new Date().getFullYear(); %>
+                            <% for(let i = currentYear;i <= currentYear + 3;i++){ %>
+                                <option value="<%= i %>"><%= i %></option>
+                            <% } %>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="textarea">Plus Précisions...*</label>
+                        <textarea name="specification" class="form-control" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <button class="btn btn-dark btn-sm" type="submit">Envoyer</button>
+                        <button class="btn btn-danger btn-sm" type="reset">Effacer</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+    <script src="/static/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/static/assets/js/bs-init.js"></script>
+    <script src="/static/assets/js/theme.js"></script>
+    <% if(locals.sendingStatus){ %>
+        <script>
+        var toastEl = document.querySelector('.toast')
+        var toast = new bootstrap.Toast(toastEl, {
+            autohide: true,
+            delay: 4000
+        })
+        toast.show()
+        </script>
+    <% }; %>
+<%- include('../partials/client/Footer',{Footer:locals.layoutData.Footer}) %>

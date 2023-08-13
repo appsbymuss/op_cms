@@ -1,0 +1,87 @@
+<%- include('../partials/client/Header',{Header:locals.layoutData.Header}) %>
+
+    <main class="page landing-page">
+        <section class="clean-block clean-hero" style="background-image:url(&quot;/static/assets_client/img/benne/benne_main.jpg&quot;);color:rgba(9, 0, 255, 0);">
+            <div class="text">
+                <h2 class="text-dark">Bienvenue sur notre site de location de benne</h2>
+                <a class="btn btn-dark btn-lg" href="/page-service">Nos Services</a>
+            </div>
+        </section>
+        <section class="clean-block slider dark">
+            <div class="container">
+                <div class="block-heading" id="examples-main">
+                    <h2 class="text-primary"><%= locals.pageData['examples-main'] && locals.pageData['examples-main']['title'] %></h2>
+                    <p><%= locals.pageData['examples-main'] && locals.pageData['examples-main']['content'] %></p>
+                </div>
+                <div class="carousel slide shadow-lg card" data-bs-ride="carousel" id="carousel-1">
+                    <div class="carousel-inner">
+                        <% locals.pageData['examples-main'] && locals.pageData['examples-main']['pageimage'] && locals.pageData['examples-main']['pageimage'].map((img,index) => {%>
+                            <div class="carousel-item <% if(index === 0){%>active<%}%>" data-bs-interval="5000"><img class="w-100 d-block" width="400px" height="575px" src="/assets_client/img/uploadedImages/componentImages/<%=img['image_path']%>" alt="Slide Image"></div>
+                        <% }); %>
+                    </div>
+                    <div><a class="carousel-control-prev" href="#carousel-1" role="button" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span><span class="visually-hidden">Previous</span></a><a class="carousel-control-next" href="#carousel-1" role="button" data-bs-slide="next"><span class="carousel-control-next-icon"></span><span class="visually-hidden">Next</span></a></div>
+                    <ol class="carousel-indicators">
+                        <% locals.pageData['examples-main'] && locals.pageData['examples-main']['pageimage'] && locals.pageData['examples-main']['pageimage'].map((img,index) => {%>
+                            <li data-bs-target="#carousel-1" data-bs-slide-to="<%=index%>" <% if(index === 0){%>class="active"<%}%>></li>
+                        <% }); %>
+                    </ol>
+                </div>
+            </div>
+        </section>
+        <section class="clean-block clean-dark dark">
+            <div class="container">
+                <div class="block-heading">
+                    <h2 class="text-primary" id="nos-locations"><%= locals.pageData['nos-locations'] && locals.pageData['nos-locations']['title'] %></h2>
+                    <p><%= locals.pageData['nos-locations'] && locals.pageData['nos-locations']['content'] %></p>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-md-6"><div class="card shadow"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d52186.48890782475!2d-2.9727050080390196!3d35.165210078351606!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd77a7f62be6e41b%3A0x6f1a80a88febeae!2sNador!5e0!3m2!1sfr!2sma!4v1679844294065!5m2!1sfr!2sma" width="auto" height="450px" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div></div>
+                    <div class="col-md-6">
+                        <h3></h3>
+                        <div class="getting-started-info">
+                            <p class="h6">Nous couvrons de nouveaux zones d'intervention pour votre facilité de service chaque jour</p>
+                            <button class="btn btn-outline-primary btn-lg" type="button">découvrir les zones</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="clean-block features">
+            <div class="container">
+                <div class="block-heading">
+                    <h2 class="text-primary" id="nos-qualities"><%= locals.pageData['nos-qualities'] && locals.pageData['nos-qualities']['title'] %></h2>
+                    <p><%= locals.pageData['nos-qualities'] && locals.pageData['nos-qualities']['content'] %></p>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-5 feature-box"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-lightning-charge icon">
+                            <path d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09zM4.157 8.5H7a.5.5 0 0 1 .478.647L6.11 13.59l5.732-6.09H9a.5.5 0 0 1-.478-.647L9.89 2.41 4.157 8.5z"></path>
+                        </svg>
+                        <h4>Facile et Rapide</h4>
+                        <p>Louez une benne en un clin d'œil pour un déménagement facile<br></p>
+                    </div>
+                    <div class="col-md-5 feature-box"><i class="material-icons icon">attach_money</i>
+                        <h4>Tarifs négociables<br></h4>
+                        <p>nous nous efforçons de vous proposer les meilleurs tarifs en fonction de vos besoins</p>
+                    </div>
+                    <div class="col-md-5 feature-box"><i class="material-icons icon">loop</i>
+                        <h4>Recyclage</h4>
+                        <p>Nous recyclons tous les déchets dont vous pourriez vous débarrasser dans les stations de recyclage</p>
+                    </div>
+                    <div class="col-md-5 feature-box"><i class="material-icons icon">high_quality</i>
+                        <h4>Nous offrons les meilleures bennes disponibles sur le marché<br></h4>
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="clean-block about-us" >
+            <div class="container">
+                <div class="block-heading">
+                    <h2 class="text-dark" id="a-propos"><%= locals.pageData['a-propos'] && locals.pageData['a-propos']['title'] %></h2>
+                    <p><%= locals.pageData['nos-qualities'] && locals.pageData['a-propos']['content'] %></p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+<%- include('../partials/client/Footer',{Footer:locals.layoutData.Footer}) %>

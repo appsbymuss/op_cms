@@ -1,0 +1,37 @@
+<%- include('../../partials/admin/Header',{'username':locals.username,'activeDash':1}) %>
+<div>
+    <h1 class="text-black-50 mb-1">Website's general information</h1>
+</div>
+
+<form method="POST" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input name="title" value="<%=locals.webParams['website_title']%>" type="text" class="form-control" id="title" aria-describedby="titleHelp">
+        <div id="titleHelp" class="form-text">Title Of the Website</div>
+    </div>
+
+    <div class="mb-3">
+      <label for="logo" class="form-label">Logo Of The Website (entreprise)</label>
+      <div class="card">
+        <img src="/assets_client/img/uploadedImages/websiteLogo/<%=locals.webParams['logo_path']%>" alt="logo of website" height="120px" width="120px"/>
+      </div>
+      <input name="logo" type="file" class="form-control" id="logo" aria-describedby="logoHelp">
+      <div id="logoHelp" class="form-text">Make sure that the logo isn't too big nor too small.</div>
+    </div>
+
+    <div class="mb-3">
+        <label for="phone" class="form-label">Phone number</label>
+        <input name="phone_number" value="<%=locals.webParams['phone_number']%>" type="tel" class="form-control" id="phone" aria-describedby="phoneHelp">
+        <div id="phoneHelp" class="form-text">Fill in the phone number of the owner of the busines.</div>
+    </div>
+
+    <div class="mb-3">
+        <label for="email" class="form-label">Email address</label>
+        <input name="email" value="<%=locals.webParams['email']%>" type="email" class="form-control" id="email" aria-describedby="emailHelp">
+        <div id="emailHelp" class="form-text">The Email address where your clients will contact you at.</div>
+    </div>
+
+    <button type="submit" class="btn btn-dark">Submit</button>
+</form>
+
+<%- include('../../partials/admin/Footer') %>

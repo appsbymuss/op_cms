@@ -1,0 +1,90 @@
+<%- include('../../partials/admin/Header',{'username':locals.username,'activeDash':1}) %>
+
+<link href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" />
+
+<div>
+    <h3 class="text-black-50 mb-5">Archivage des Commandes:</h3>
+</div>
+
+<div class="row">
+    <div id="table"></div>
+</div>
+
+<script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
+<script>
+    const grid = 
+    new gridjs.Grid({
+        search:{
+            debounceTimeout:1000 ,
+            server: {
+                url: (prev, keyword) => {
+                    let nextPath;
+                    if(prev.includes('?')){
+                        nextPath =  `${prev}&search=${keyword}`
+                    }else{
+                        nextPath = `${prev}?search=${keyword}`
+                    }
+                    console.log(nextPath);
+                    return nextPath;
+                }
+            }
+        },
+        sort: true,
+        height:"auto",
+        columns: [
+            "Commandé A" ,
+            "Prenom",
+            "Nom",
+            "Sexe",
+            "Ville",
+            "Date D'Intervention",
+            "Details",
+            "Numero Tel",
+            "Email"
+        ],
+        server: {
+            url: 'https://hightower.ddns.net/admin/api/archives',
+            total: data => data.count,
+            then: data => {
+                console.log(data);
+                return data.results.map(
+                    command => [
+                        command.createdAt.substring(0,10),
+                        command.first_name,
+                        command.last_name,
+                        command.sexe,
+                        command.ville,
+                        command.interventionDate && command.interventionDate.substring(0,10),
+                        command.specification,
+                        command.phone_number,
+                        command.email
+                    ])
+            }
+        },
+        pagination: {
+            limit: 10,
+            resetPageOnUpdate:true,
+            server: {
+                url: (prev, page, limit) => {
+                    console.log("PAGE IS: " + page);
+                    console.log("PAGINATION: " + prev, page, limit);
+                    let nextPath;
+                    if(prev.includes('?')){
+                        nextPath = `${prev}&limit=${limit}&offset=${page * limit}`
+                    }else{
+                        nextPath = `${prev}?limit=${limit}&offset=${page * limit}`
+                    }
+                    console.log(nextPath);
+                    return nextPath;
+                }
+            }
+        }
+    }).render(document.getElementById("table"));
+    console.log(grid);
+</script>
+<!-- .updateConfig({
+    // lets update the columns field only
+    columns: ['First Name', 'Email', 'Phone']
+  }); -->
+
+<%- include('../../partials/admin/Footer') %>
